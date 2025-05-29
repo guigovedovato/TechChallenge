@@ -47,3 +47,6 @@ ipch/
 # SQLite
 *.db
 *.db*
+
+# Rider
+.idea/
