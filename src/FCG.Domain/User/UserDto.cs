@@ -1,6 +1,6 @@
 using FCG.Domain.Authentication;
 
-namespace FCG.Domain.Profile;
+namespace FCG.Domain.User;
 
 public class UserDto
 {

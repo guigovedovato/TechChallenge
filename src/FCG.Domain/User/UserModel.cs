@@ -2,7 +2,7 @@ using FCG.Domain.Authentication;
 using FCG.Domain.Common;
 using System.Text.RegularExpressions;
 
-namespace FCG.Domain.Profile;
+namespace FCG.Domain.User;
 
 public partial record UserModel : EntityBase
 {

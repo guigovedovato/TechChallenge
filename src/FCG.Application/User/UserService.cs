@@ -1,9 +1,9 @@
 ﻿using FCG.Domain.Common.Response;
-using FCG.Domain.Profile;
+using FCG.Domain.User;
 using FCG.Infrastructure.Data.Repository;
 using FCG.Infrastructure.Log;
 
-namespace FCG.Application.Profile;
+namespace FCG.Application.User;
 
 public class UserService(IUserRepository _userRepository, ILoginRepository _loginRepository, BaseLogger _logger) : IUserService
 {

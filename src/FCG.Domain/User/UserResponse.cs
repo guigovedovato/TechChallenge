@@ -1,6 +1,6 @@
 using MessagePack;
 
-namespace FCG.Domain.Profile;
+namespace FCG.Domain.User;
 
 [MessagePackObject]
 public class UserResponse(Guid Id, DateTime CreatedAt, DateTime UpdatedAt, string FirstName, string LastName, Role Role, string Email, bool IsActive)

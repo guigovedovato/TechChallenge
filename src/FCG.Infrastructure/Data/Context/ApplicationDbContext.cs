@@ -1,7 +1,7 @@
 ﻿using FCG.Domain.Authentication;
 using FCG.Domain.Library;
-using FCG.Domain.Profile;
-using FCG.Domain.Store;
+using FCG.Domain.User;
+using FCG.Domain.Game;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

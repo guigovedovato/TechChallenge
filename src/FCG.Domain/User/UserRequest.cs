@@ -1,4 +1,4 @@
-namespace FCG.Domain.Profile;
+namespace FCG.Domain.User;
 
 public class UserRequest(Guid id, string FirstName, string LastName, Role Role, string Email, string Password)
 {

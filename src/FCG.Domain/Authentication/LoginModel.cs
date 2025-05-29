@@ -1,5 +1,5 @@
 using FCG.Domain.Common;
-using FCG.Domain.Profile;
+using FCG.Domain.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace FCG.Domain.Authentication;

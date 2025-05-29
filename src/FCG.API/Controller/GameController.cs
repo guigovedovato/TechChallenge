@@ -1,5 +1,5 @@
 ﻿using FCG.Domain.Common.Response;
-using FCG.Domain.Store;
+using FCG.Domain.Game;
 using FCG.Infrastructure.Cache;
 using MessagePack;
 

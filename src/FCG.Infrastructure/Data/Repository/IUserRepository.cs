@@ -1,4 +1,4 @@
-﻿using FCG.Domain.Profile;
+﻿using FCG.Domain.User;
 
 namespace FCG.Infrastructure.Data.Repository;
 

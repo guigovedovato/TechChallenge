@@ -1,7 +1,7 @@
-using FCG.Application.Profile;
+using FCG.Application.User;
 using FCG.Domain.Authentication;
 using FCG.Domain.Common.Response;
-using FCG.Domain.Profile;
+using FCG.Domain.User;
 using FCG.Infrastructure.CorrelationId;
 using FCG.Infrastructure.Data.Repository;
 using FCG.Infrastructure.Log;

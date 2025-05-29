@@ -1,5 +1,4 @@
 ﻿using FCG.Domain.Authentication;
-using FCG.Domain.Profile;
 using FCG.Infrastructure.Authentication;
 using FCG.Infrastructure.Data.Repository;
 using FCG.Infrastructure.Log;

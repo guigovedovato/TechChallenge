@@ -1,10 +1,12 @@
-using FCG.Domain.Common;
 using FCG.Domain.Library;
 
-namespace FCG.Domain.Store;
+namespace FCG.Domain.Game;
 
-public record GameModel : EntityBase
+public class GameDto
 {
+    public Guid Id { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
     public required string Name { get; set; }
     public required string Description { get; set; }
     public string ImageUrl { get; set; } = null!;
@@ -13,15 +15,12 @@ public record GameModel : EntityBase
     public required string Publisher { get; set; }
     public DateTime ReleaseDate { get; set; }
     public decimal Price { get; set; }
-    public bool IsActive { get; set; } = true;
+    public bool IsActive { get; set; }
+    
+    public LibraryDto Library { get; set; } = null!;
 
-    //public int LibraryId { get; set; }
-
-    //public virtual LibraryModel Library { get; set; } = null!;
-
-    public GameDto ToGameDto() => new()
+    public GameModel ToGameModel() => new()
     {
-        Id = Id,
         CreatedAt = CreatedAt,
         UpdatedAt = UpdatedAt,
         Name = Name,
@@ -31,7 +30,8 @@ public record GameModel : EntityBase
         IsDemo = IsDemo,
         Publisher = Publisher,
         ReleaseDate = ReleaseDate,
-        Price = Price,
-        IsActive = IsActive
+        Price = Price
     };
+
+    public GameResponse ToGameResponse() => new(Id, CreatedAt, UpdatedAt, Name, Description, ImageUrl, Genre, IsDemo, Publisher, ReleaseDate, Price, IsActive);
 }
