@@ -1,7 +1,6 @@
-﻿using FCG.Domain.Authentication;
-using FCG.Domain.Library;
-using FCG.Domain.User;
+﻿using FCG.Domain.Login;
 using FCG.Domain.Game;
+using FCG.Domain.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -29,7 +28,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<LoginModel> Logins { get; set; } = null!;
     public DbSet<UserModel> Users { get; set; } = null!;
     public DbSet<GameModel> Games { get; set; } = null!;
-    public DbSet<LibraryModel> Libraries { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

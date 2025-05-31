@@ -1,4 +1,4 @@
-﻿using FCG.Domain.Authentication;
+﻿using FCG.Domain.Login;
 using FCG.Infrastructure.Data.Context;
 using FCG.Infrastructure.Log;
 using Microsoft.EntityFrameworkCore;

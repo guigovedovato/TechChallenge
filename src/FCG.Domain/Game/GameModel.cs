@@ -14,10 +14,6 @@ public record GameModel : EntityBase
     public decimal Price { get; set; }
     public bool IsActive { get; set; } = true;
 
-    //public int LibraryId { get; set; }
-
-    //public virtual LibraryModel Library { get; set; } = null!;
-
     public GameDto ToGameDto() => new()
     {
         Id = Id,

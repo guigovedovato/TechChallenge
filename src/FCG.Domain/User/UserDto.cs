@@ -1,4 +1,4 @@
-using FCG.Domain.Authentication;
+using FCG.Domain.Login;
 
 namespace FCG.Domain.User;
 

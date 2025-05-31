@@ -1,4 +1,4 @@
-﻿using FCG.Domain.Authentication;
+﻿using FCG.Domain.Login;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,7 +22,7 @@ public class LoginDbConfiguration : IEntityTypeConfiguration<LoginModel>
         {
             Id = Guid.Parse("E402588B-C931-437D-83AC-941010840391"),
             Email = "admin@email.com",
-            Password = "AdminPassword!123",
+            Password = "AQAAAAIAAYagAAAAEFvxevg2Oz/DiArPRXiGGbDy29yxw2ZrroJzNh68WHeARuCaupa6cqkHRj2x0B2S8A==",
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         });

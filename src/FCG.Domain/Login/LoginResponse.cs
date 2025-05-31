@@ -1,6 +1,6 @@
 using MessagePack;
 
-namespace FCG.Domain.Authentication;
+namespace FCG.Domain.Login;
 
 [MessagePackObject]
 public class LoginResponse(int UserName, string Role, string email, string Token)

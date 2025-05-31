@@ -1,8 +1,6 @@
-﻿using FCG.Domain.Authentication;
-using FCG.Domain.User;
+﻿using FCG.Domain.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Serilog;
 
 namespace FCG.Infrastructure.Data.Configuration;
 

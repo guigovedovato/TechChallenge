@@ -43,9 +43,7 @@ public static class UserEndpoints
         var user = await _userService.GetUserByIdAsync(id, new CancellationToken());
 
         if (user is null)
-        {
             return TypedResults.NotFound();
-        }
 
         return TypedResults.Ok(
             MessagePackSerializer.SerializeToJson(
@@ -57,14 +55,15 @@ public static class UserEndpoints
         var key = "UserList";
 
         if (_cacheService.Get(key) is List<UserResponse> cachedUser)
-        {
             return TypedResults.Ok(
                 MessagePackSerializer.SerializeToJson(
                     new ApiResponse<List<UserResponse>>(cachedUser, $"Users found.")));
-        }
 
         var userList = await _userService.GetAllUsersAsync(new CancellationToken());
         var userListResponse = userList.Select(user => user.ToUserResponse()).ToList();
+
+        if (userListResponse.Count == 0)
+            return TypedResults.NotFound();
 
         _cacheService.Set(key, userListResponse);
 

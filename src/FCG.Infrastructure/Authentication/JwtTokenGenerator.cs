@@ -17,10 +17,10 @@ public class JwtTokenGenerator(IConfiguration _configuration) : IJwtTokenGenerat
 
         var claims = new[]
         {
-    new Claim(JwtRegisteredClaimNames.Sub, userName),
-    new Claim(ClaimTypes.Role, role),
-    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
+            new Claim(JwtRegisteredClaimNames.Sub, userName),
+            new Claim(ClaimTypes.Role, role),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

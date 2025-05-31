@@ -42,9 +42,7 @@ public static class GameEndpoints
         var game = await _GameService.GetGameByIdAsync(id, new CancellationToken());
 
         if (game is null)
-        {
             return TypedResults.NotFound();
-        }
 
         return TypedResults.Ok(
             MessagePackSerializer.SerializeToJson(
@@ -56,14 +54,15 @@ public static class GameEndpoints
         var key = "GameList";
 
         if (_cacheService.Get(key) is List<GameResponse> cachedGame)
-        {
             return TypedResults.Ok(
                 MessagePackSerializer.SerializeToJson(
                     new ApiResponse<List<GameResponse>>(cachedGame, $"Games found.")));
-        }
 
         var gameList = await _gameService.GetAllGamesAsync(new CancellationToken());
         var gameListResponse = gameList.Select(x => x.ToGameResponse()).ToList();
+
+        if (gameListResponse.Count == 0)
+            return TypedResults.NotFound();
 
         _cacheService.Set(key, gameListResponse);
 

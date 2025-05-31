@@ -1,6 +1,6 @@
 using Bogus;
 using FCG.Application.User;
-using FCG.Domain.Authentication;
+using FCG.Domain.Login;
 using FCG.Domain.Common.Response;
 using FCG.Domain.User;
 using FCG.Infrastructure.CorrelationId;
@@ -13,9 +13,9 @@ namespace FCG.Application.Tests.User;
 
 public class UserServiceTests
 {
-    private static readonly Mock<IUserRepository> _userRepository = new();
-    private static readonly Mock<ILoginRepository> _loginRepository = new();
-    private static readonly Mock<BaseLogger> _logger = new(Mock.Of<Serilog.ILogger>(), Mock.Of<ICorrelationIdGenerator>());
+    private static readonly Mock<IUserRepository> _mockUserRepository = new();
+    private static readonly Mock<ILoginRepository> _mockLoginRepository = new();
+    private static readonly Mock<BaseLogger> _mockLogger = new(Mock.Of<Serilog.ILogger>(), Mock.Of<ICorrelationIdGenerator>());
 
     private readonly Guid EXISTED_USER = Guid.NewGuid();
     private const string EMAIL = "test@company.com";
@@ -23,13 +23,13 @@ public class UserServiceTests
 
     private readonly UserService userService;
 
-    public UserServiceTests() => userService = new(_userRepository.Object, _loginRepository.Object, _logger.Object);
+    public UserServiceTests() => userService = new(_mockUserRepository.Object, _mockLoginRepository.Object, _mockLogger.Object);
 
     [Fact]
     public async Task CreateUserAsync_UserIsCreated_UserReturned()
     {
         // Arrange
-        UserDto expected = new Faker<UserDto>()
+        var expected = new Faker<UserDto>()
             .RuleFor(u => u.Id, _ => EXISTED_USER)
             .RuleFor(u => u.IsActive, _ => true)
             .RuleFor(u => u.Role, _ => Role.User)
@@ -38,10 +38,10 @@ public class UserServiceTests
             .Generate(1)
             .First();
 
-        _loginRepository.Setup(_loginRepository => _loginRepository.GetByEmailAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+        _mockLoginRepository.Setup(_loginRepository => _loginRepository.GetByEmailAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((LoginModel?)null);
 
-        _userRepository.Setup(x => x.AddAsync(It.IsAny<UserModel>(), It.IsAny<CancellationToken>()))
+        _mockUserRepository.Setup(x => x.AddAsync(It.IsAny<UserModel>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new UserModel 
             { 
                 Id = expected.Id,
@@ -49,7 +49,7 @@ public class UserServiceTests
                 LastName = expected.LastName,
                 Role = expected.Role
             });
-        _loginRepository.Setup(x => x.AddAsync(It.IsAny<LoginModel>(), It.IsAny<CancellationToken>()))
+        _mockLoginRepository.Setup(x => x.AddAsync(It.IsAny<LoginModel>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new LoginModel { Id = Guid.NewGuid(), Email = EMAIL, Password = PASSWORD });
 
         // Act
@@ -69,14 +69,14 @@ public class UserServiceTests
         string password)
     {
         // Arrange
-        UserDto expected = new Faker<UserDto>()
+        var expected = new Faker<UserDto>()
             .RuleFor(u => u.Id, _ => EXISTED_USER)
             .RuleFor(u => u.Email, _ => email)
             .RuleFor(u => u.Password, _ => password)
             .Generate(1)
             .First();
 
-        _loginRepository.Setup(_loginRepository => _loginRepository.GetByEmailAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+        _mockLoginRepository.Setup(_loginRepository => _loginRepository.GetByEmailAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((LoginModel?)null);
 
         // Act
@@ -90,13 +90,13 @@ public class UserServiceTests
     public async Task CreateUserAsync_UserIsCreated_UserAlreadyExists()
     {
         // Arrange
-        UserDto expected = new Faker<UserDto>()
+        var expected = new Faker<UserDto>()
             .RuleFor(u => u.Id, _ => EXISTED_USER)
             .RuleFor(u => u.Email, _ => EMAIL)
             .Generate(1)
             .First();
 
-        _loginRepository.Setup(x => x.GetByEmailAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+        _mockLoginRepository.Setup(x => x.GetByEmailAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new LoginModel { Email = EMAIL, Password = string.Empty });
 
         // Act

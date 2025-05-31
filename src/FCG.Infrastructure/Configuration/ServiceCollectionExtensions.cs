@@ -30,7 +30,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ILoginRepository, LoginRepository>();
         services.AddScoped<IGameRepository, GameRepository>();
-        services.AddScoped<ILibraryRepository, LibraryRepository>();
     }
 
     private static void AddSqlContext(this IServiceCollection services, IConfiguration configuration)

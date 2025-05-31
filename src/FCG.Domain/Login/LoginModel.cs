@@ -2,7 +2,7 @@ using FCG.Domain.Common;
 using FCG.Domain.User;
 using Microsoft.AspNetCore.Identity;
 
-namespace FCG.Domain.Authentication;
+namespace FCG.Domain.Login;
 
 public record LoginModel : EntityBase
 {

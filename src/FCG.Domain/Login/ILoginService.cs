@@ -1,4 +1,4 @@
-﻿namespace FCG.Domain.Authentication;
+﻿namespace FCG.Domain.Login;
 
 public interface ILoginService
 {

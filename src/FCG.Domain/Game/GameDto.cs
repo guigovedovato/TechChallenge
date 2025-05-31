@@ -1,5 +1,3 @@
-using FCG.Domain.Library;
-
 namespace FCG.Domain.Game;
 
 public class GameDto
@@ -16,8 +14,6 @@ public class GameDto
     public DateTime ReleaseDate { get; set; }
     public decimal Price { get; set; }
     public bool IsActive { get; set; }
-    
-    public LibraryDto Library { get; set; } = null!;
 
     public GameModel ToGameModel() => new()
     {

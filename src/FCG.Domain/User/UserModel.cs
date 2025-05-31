@@ -1,4 +1,4 @@
-using FCG.Domain.Authentication;
+using FCG.Domain.Login;
 using FCG.Domain.Common;
 using System.Text.RegularExpressions;
 

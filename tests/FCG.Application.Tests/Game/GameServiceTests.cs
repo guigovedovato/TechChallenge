@@ -12,27 +12,27 @@ namespace FCG.Application.Tests.Game;
 
 public class GameServiceTests
 {
-    private static readonly Mock<IGameRepository> _gameRepository = new();
-    private static readonly Mock<BaseLogger> _logger = new(Mock.Of<Serilog.ILogger>(), Mock.Of<ICorrelationIdGenerator>());
+    private static readonly Mock<IGameRepository> _mockGameRepository = new();
+    private static readonly Mock<BaseLogger> _mockLogger = new(Mock.Of<Serilog.ILogger>(), Mock.Of<ICorrelationIdGenerator>());
 
     private const string ERROR_MESSAGE = "Game with name {0} already exists";
     private readonly Guid EXISTED_GAME = Guid.NewGuid();
 
     private readonly GameService gameService;
 
-    public GameServiceTests() => gameService = new(_gameRepository.Object, _logger.Object);
+    public GameServiceTests() => gameService = new(_mockGameRepository.Object, _mockLogger.Object);
 
     [Fact]
     public async Task CreateGameAsync_GameIsCreated_GameReturned()
     {
         // Arrange
-        GameDto expected = new Faker<GameDto>()
+        var expected = new Faker<GameDto>()
             .RuleFor(g => g.Id, _ => EXISTED_GAME)
             .RuleFor(g => g.IsActive, _ => true)
             .Generate(1)
             .First();
 
-        _gameRepository.Setup(x => x.AddAsync(It.IsAny<GameModel>(), It.IsAny<CancellationToken>()))
+        _mockGameRepository.Setup(x => x.AddAsync(It.IsAny<GameModel>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new GameModel
             {
                 Id = expected.Id,
@@ -52,13 +52,13 @@ public class GameServiceTests
     public async Task CreateGameAsync_GameIsNotCreated_ErrorMessageReturned()
     {
         // Arrange
-        GameDto expected = new Faker<GameDto>()
+        var expected = new Faker<GameDto>()
             .RuleFor(g => g.Id, _ => EXISTED_GAME)
             .RuleFor(g => g.Name, _ => "Existing Game Name")
             .Generate(1)
             .First();
 
-        _gameRepository.Setup(x => x.GetGameByNameAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+        _mockGameRepository.Setup(x => x.GetGameByNameAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new GameModel
             {
                 Id = expected.Id,
