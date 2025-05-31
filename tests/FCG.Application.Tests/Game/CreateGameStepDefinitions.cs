@@ -1,6 +1,6 @@
-using FCG.Application.Store;
+using FCG.Application.Game;
 using FCG.Domain.Common.Response;
-using FCG.Domain.Store;
+using FCG.Domain.Game;
 using FCG.Infrastructure.CorrelationId;
 using FCG.Infrastructure.Data.Repository;
 using FCG.Infrastructure.Log;

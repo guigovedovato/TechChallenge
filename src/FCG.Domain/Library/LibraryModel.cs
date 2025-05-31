@@ -1,5 +1,4 @@
 using FCG.Domain.Common;
-using FCG.Domain.Profile;
 
 namespace FCG.Domain.Library;
 

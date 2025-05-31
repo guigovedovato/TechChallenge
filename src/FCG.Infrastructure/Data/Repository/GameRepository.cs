@@ -1,5 +1,4 @@
-﻿using FCG.Domain.Authentication;
-using FCG.Domain.Store;
+﻿using FCG.Domain.Game;
 using FCG.Infrastructure.Data.Context;
 using FCG.Infrastructure.Log;
 using Microsoft.EntityFrameworkCore;

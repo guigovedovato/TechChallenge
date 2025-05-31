@@ -1,6 +1,6 @@
 using MessagePack;
 
-namespace FCG.Domain.Store;
+namespace FCG.Domain.Game;
 
 [MessagePackObject]
 public class GameResponse(Guid Id, DateTime CreatedAt, DateTime UpdatedAt, string Name, string Description, string ImageUrl, Genre Genre, bool IsDemo, string Publisher, DateTime ReleaseDate, decimal Price, bool IsActive)

@@ -1,5 +1,4 @@
-﻿using FCG.Domain.Authentication;
-using FCG.Domain.Profile;
+﻿using FCG.Domain.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

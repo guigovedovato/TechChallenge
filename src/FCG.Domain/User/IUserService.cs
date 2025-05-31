@@ -1,6 +1,6 @@
 ﻿using FCG.Domain.Common.Response;
 
-namespace FCG.Domain.Profile;
+namespace FCG.Domain.User;
 
 public interface IUserService
 {

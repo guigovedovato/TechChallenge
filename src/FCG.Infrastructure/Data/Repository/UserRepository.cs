@@ -1,4 +1,4 @@
-﻿using FCG.Domain.Profile;
+﻿using FCG.Domain.User;
 using FCG.Infrastructure.Data.Context;
 using FCG.Infrastructure.Log;
 

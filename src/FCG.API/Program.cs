@@ -4,7 +4,7 @@ using FCG.API.Configuration.Middleware.CorrelationId;
 using FCG.API.Configuration.Middleware.GlobalExceptionHandling;
 using FCG.API.Configuration.Middleware.RequestLogging;
 using FCG.API.Configuration.Swagger;
-using FCG.API.Controller;
+using FCG.API.Endpoints;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

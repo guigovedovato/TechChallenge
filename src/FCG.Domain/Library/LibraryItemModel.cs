@@ -1,5 +1,3 @@
-using FCG.Domain.Store;
-
 namespace FCG.Domain.Library;
 
 public record LibraryItemModel

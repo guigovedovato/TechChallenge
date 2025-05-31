@@ -1,12 +1,12 @@
 ﻿using FCG.Domain.Common.Response;
-using FCG.Domain.Profile;
-using FCG.Domain.Store;
+using FCG.Domain.User;
+using FCG.Domain.Game;
 using FCG.Infrastructure.Cache;
 using MessagePack;
 
-namespace FCG.API.Controller;
+namespace FCG.API.Endpoints;
 
-public static class UserController
+public static class UserEndpoints
 {
     public static void MapUserEndpoints(this IEndpointRouteBuilder app)
     {
@@ -23,8 +23,8 @@ public static class UserController
             policy.SetVaryByRouteValue("user");
             policy.Expire(TimeSpan.FromMinutes(10));
         }).RequireAuthorization();
-        userGroup.MapPost("/", CreateUser);
-        userGroup.MapDelete("/{id}", DeleteUser).RequireAuthorization();
+        userGroup.MapPost("/", CreateUser).RequireAuthorization("Admin");
+        userGroup.MapDelete("/{id}", DeleteUser).RequireAuthorization("Admin");
         userGroup.MapPut("/{id}", UpdateUser).RequireAuthorization();
     }
 

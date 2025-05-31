@@ -1,5 +1,4 @@
 ﻿using FCG.Domain.Authentication;
-using FCG.Domain.Profile;
 using FCG.Infrastructure.Authentication;
 using FCG.Infrastructure.Data.Repository;
 using FCG.Infrastructure.Log;
@@ -12,7 +11,7 @@ public class LoginService(IJwtTokenGenerator _jwtGenerator, ILoginRepository _lo
     {
         _logger.LogWarning($"Logging in user: {loginDto.Email}");
 
-        var loginModel = await _loginRepository.GetByEmailAsync(loginDto.Email, cancellationToken);
+        LoginModel? loginModel = await _loginRepository.GetByEmailAsync(loginDto.Email, cancellationToken);
 
         if (loginModel is null)
         {
@@ -28,7 +27,7 @@ public class LoginService(IJwtTokenGenerator _jwtGenerator, ILoginRepository _lo
 
         _logger.LogInformation($"User logged in: {loginDto.Email}");
 
-        var loggedUer = new LoginDto
+        LoginDto loggedUer = new()
         {
             Email = loginDto.Email,
             Token = await _jwtGenerator.GenerateTokenAsync(loginDto.Email, loginModel.User.Role.ToString())

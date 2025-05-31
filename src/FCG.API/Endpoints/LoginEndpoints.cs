@@ -1,8 +1,8 @@
 ﻿using FCG.Domain.Authentication;
 
-namespace FCG.API.Controller;
+namespace FCG.API.Endpoints;
 
-public static class LoginController
+public static class LoginEndpoints
 {
     public static void MapLoginEndpoints(this IEndpointRouteBuilder app)
     {

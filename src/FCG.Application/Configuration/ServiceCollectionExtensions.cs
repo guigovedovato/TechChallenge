@@ -1,9 +1,9 @@
 using FCG.Application.Authentication;
-using FCG.Application.Profile;
-using FCG.Application.Store;
+using FCG.Application.User;
+using FCG.Application.Game;
 using FCG.Domain.Authentication;
-using FCG.Domain.Profile;
-using FCG.Domain.Store;
+using FCG.Domain.User;
+using FCG.Domain.Game;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FCG.Application.Configuration;

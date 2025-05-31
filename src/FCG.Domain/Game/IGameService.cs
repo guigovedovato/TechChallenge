@@ -1,6 +1,6 @@
 ﻿using FCG.Domain.Common.Response;
 
-namespace FCG.Domain.Store;
+namespace FCG.Domain.Game;
 
 public interface IGameService
 {

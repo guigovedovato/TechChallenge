@@ -1,10 +1,9 @@
 ﻿using FCG.Domain.Common.Response;
-using FCG.Domain.Profile;
-using FCG.Domain.Store;
+using FCG.Domain.Game;
 using FCG.Infrastructure.Data.Repository;
 using FCG.Infrastructure.Log;
 
-namespace FCG.Application.Store;
+namespace FCG.Application.Game;
 
 public class GameService(IGameRepository _gameRepository, BaseLogger _logger) : IGameService
 {
