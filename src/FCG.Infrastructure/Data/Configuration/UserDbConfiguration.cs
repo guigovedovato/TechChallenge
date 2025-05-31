@@ -1,6 +1,8 @@
-﻿using FCG.Domain.User;
+﻿using FCG.Domain.Authentication;
+using FCG.Domain.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Serilog;
 
 namespace FCG.Infrastructure.Data.Configuration;
 
@@ -25,5 +27,18 @@ public class UserDbConfiguration : IEntityTypeConfiguration<UserModel>
             .HasForeignKey<UserModel>(c => c.LoginId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
+
+        // Admin user creation
+        builder.HasData(new UserModel
+        {
+            Id = Guid.NewGuid(),
+            FirstName = "Admin",
+            LastName = "User",
+            Role = Role.Admin,
+            IsActive = true,
+            LoginId = Guid.Parse("E402588B-C931-437D-83AC-941010840391"),
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        });
     }
 }

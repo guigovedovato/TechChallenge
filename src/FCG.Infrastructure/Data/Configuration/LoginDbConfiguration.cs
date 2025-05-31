@@ -16,5 +16,15 @@ public class LoginDbConfiguration : IEntityTypeConfiguration<LoginModel>
         builder.Property(l => l.Email).IsRequired().HasMaxLength(100);
         builder.HasIndex(l => l.Email).IsUnique();
         builder.Property(l => l.Password).IsRequired().HasMaxLength(100);
+
+        // Admin login creation
+        builder.HasData(new LoginModel
+        {
+            Id = Guid.Parse("E402588B-C931-437D-83AC-941010840391"),
+            Email = "admin@email.com",
+            Password = "AdminPassword!123",
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        });
     }
 }

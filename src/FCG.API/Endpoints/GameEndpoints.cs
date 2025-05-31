@@ -15,7 +15,7 @@ public static class GameEndpoints
 
         gameGroup.MapGet("/", GetAllGames).CacheOutput(policy =>
         {
-            policy.SetVaryByRouteValue("allGames");
+            policy.SetVaryByRouteValue("AllGames");
             policy.Expire(TimeSpan.FromMinutes(10));
         }).RequireAuthorization();
         gameGroup.MapGet("/{id}", GetGame).CacheOutput(policy =>

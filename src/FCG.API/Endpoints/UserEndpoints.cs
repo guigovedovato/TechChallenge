@@ -11,16 +11,17 @@ public static class UserEndpoints
     public static void MapUserEndpoints(this IEndpointRouteBuilder app)
     {
         var userGroup = app
-            .MapGroup("/user");
+            .MapGroup("/user")
+            .WithOpenApi();
 
         userGroup.MapGet("/", GetAllUsers).CacheOutput(policy =>
         {
-            policy.SetVaryByRouteValue("allUsers");
+            policy.SetVaryByRouteValue("AllUsers");
             policy.Expire(TimeSpan.FromMinutes(10));
         }).RequireAuthorization("Admin");
         userGroup.MapGet("/{id}", GetUser).CacheOutput(policy =>
         {
-            policy.SetVaryByRouteValue("user");
+            policy.SetVaryByRouteValue("User");
             policy.Expire(TimeSpan.FromMinutes(10));
         }).RequireAuthorization();
         userGroup.MapPost("/", CreateUser).RequireAuthorization("Admin");
