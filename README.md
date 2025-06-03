@@ -11,6 +11,7 @@ API REST em .NET8 para gerenciar usuários e seus jogos adquiridos.
   * Baixe e configure a aplicação na seção [Iniciando](#iniciando);
   * Como executar a aplicação na seção [Execução](#execução);
   * Veja a API na seção [API](#api);
+  * Para logar como admin [Admin](#admin);
 
 ## Requisitos
 
@@ -55,3 +56,13 @@ dotnet run
 ## API
 
 * Abra o **navegador** e acesse <http://localhost:5267/swagger/index.html> ou [clique aqui](http://localhost:5267/swagger/index.html)
+
+## Admin
+
+``` json
+// Login
+{
+  "email": "admin@email.com",
+  "password": "AdminPassword!123"
+}
+```
