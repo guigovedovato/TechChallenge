@@ -7,6 +7,8 @@ namespace FCG.API.Endpoints;
 
 public static class GameEndpoints
 {
+    private const string GAME_LIST_KEY = "GameList";
+    
     public static void MapGameEndpoints(this IEndpointRouteBuilder app)
     {
         var gameGroup = app
@@ -28,8 +30,10 @@ public static class GameEndpoints
         gameGroup.MapPut("/{id}", UpdateGame).RequireAuthorization("Admin");
     }
 
-    static async Task<IResult> UpdateGame(Guid id, GameRequest gameRequest, IGameService _gameService)
+    static async Task<IResult> UpdateGame(Guid id, GameRequest gameRequest, IGameService _gameService, ICacheService _cacheService)
     {
+        _cacheService.Remove(GAME_LIST_KEY);
+        
         var game = await _gameService.UpdateGameAsync(id, gameRequest.ToGameDto(), new CancellationToken());
         return game.Data is not null ? TypedResults.NoContent() : 
             TypedResults.BadRequest(
@@ -51,9 +55,7 @@ public static class GameEndpoints
 
     static async Task<IResult> GetAllGames(IGameService _gameService, ICacheService _cacheService)
     {
-        var key = "GameList";
-
-        if (_cacheService.Get(key) is List<GameResponse> cachedGame)
+        if (_cacheService.Get(GAME_LIST_KEY) is List<GameResponse> cachedGame)
             return TypedResults.Ok(
                 MessagePackSerializer.SerializeToJson(
                     new ApiResponse<List<GameResponse>>(cachedGame, $"Games found.")));
@@ -64,15 +66,17 @@ public static class GameEndpoints
         if (gameListResponse.Count == 0)
             return TypedResults.NotFound();
 
-        _cacheService.Set(key, gameListResponse);
+        _cacheService.Set(GAME_LIST_KEY, gameListResponse);
 
         return TypedResults.Ok(
             MessagePackSerializer.SerializeToJson(
                 new ApiResponse<List<GameResponse>>(gameListResponse, $"Games found.")));
     }
 
-    static async Task<IResult> CreateGame(GameRequest gameRequest, IGameService _gameService)
+    static async Task<IResult> CreateGame(GameRequest gameRequest, IGameService _gameService, ICacheService _cacheService)
     {
+        _cacheService.Remove(GAME_LIST_KEY);
+        
         var game = await _gameService.CreateGameAsync(gameRequest.ToGameDto(), new CancellationToken());
         return game.Data is not null ? TypedResults.Created($"/Game/{game.Data.Id}", game.Data) :
             TypedResults.BadRequest(

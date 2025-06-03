@@ -8,6 +8,8 @@ namespace FCG.API.Endpoints;
 
 public static class UserEndpoints
 {
+    private const string USER_LIST_KEY = "UserList";
+    
     public static void MapUserEndpoints(this IEndpointRouteBuilder app)
     {
         var userGroup = app
@@ -29,8 +31,10 @@ public static class UserEndpoints
         userGroup.MapPut("/{id}", UpdateUser).RequireAuthorization();
     }
 
-    static async Task<IResult> UpdateUser(Guid id, UserRequest userRequest, IUserService _userService)
+    static async Task<IResult> UpdateUser(Guid id, UserRequest userRequest, IUserService _userService, ICacheService _cacheService)
     {
+        _cacheService.Remove(USER_LIST_KEY);
+        
         var user = await _userService.UpdateUserAsync(id, userRequest.ToUserDto(), new CancellationToken());
         return user.Data is not null ? TypedResults.NoContent() :
             TypedResults.BadRequest(
@@ -52,9 +56,7 @@ public static class UserEndpoints
 
     static async Task<IResult> GetAllUsers(IUserService _userService, ICacheService _cacheService)
     {
-        var key = "UserList";
-
-        if (_cacheService.Get(key) is List<UserResponse> cachedUser)
+        if (_cacheService.Get(USER_LIST_KEY) is List<UserResponse> cachedUser)
             return TypedResults.Ok(
                 MessagePackSerializer.SerializeToJson(
                     new ApiResponse<List<UserResponse>>(cachedUser, $"Users found.")));
@@ -65,15 +67,17 @@ public static class UserEndpoints
         if (userListResponse.Count == 0)
             return TypedResults.NotFound();
 
-        _cacheService.Set(key, userListResponse);
+        _cacheService.Set(USER_LIST_KEY, userListResponse);
 
         return TypedResults.Ok(
             MessagePackSerializer.SerializeToJson(
                 new ApiResponse<List<UserResponse>>(userListResponse, $"Users found.")));
     }
 
-    static async Task<IResult> CreateUser(UserRequest userRequest, IUserService _userService)
+    static async Task<IResult> CreateUser(UserRequest userRequest, IUserService _userService, ICacheService _cacheService)
     {
+        _cacheService.Remove(USER_LIST_KEY);
+        
         var user = await _userService.CreateUserAsync(userRequest.ToUserDto(), new CancellationToken());
         return user.Data is not null ? TypedResults.Created($"/user/{user.Data.Id}", user.Data) :
             TypedResults.BadRequest(

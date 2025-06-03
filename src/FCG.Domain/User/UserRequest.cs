@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
+
 namespace FCG.Domain.User;
 
 public class UserRequest(Guid id, string FirstName, string LastName, Role Role, string Email, string Password)
 {
+    [JsonIgnore]
     public Guid Id { get; set; } = id;
 
     public string FirstName { get; set; } = FirstName;
