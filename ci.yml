@@ -48,7 +48,7 @@ steps:
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   inputs:
     containerRegistry: '$(dockerRegistryServiceConnection)'
-    repository: '$(imageRepository)
+    repository: '$(imageRepository)'
     command: 'build'
     Dockerfile: '$(dockerfilePath)'
     tags: |
