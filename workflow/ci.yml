@@ -1,0 +1,72 @@
+# Azure DevOps Pipeline para CI de uma aplicação .NET 8 com Docker
+
+trigger:
+- main
+pr:
+- main
+
+variables:
+  buildConfiguration: 'Release'
+  imageRepository: 'fcg'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Instalar .NET 8 SDK'
+  inputs:
+    version: '8.x'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restaurar pacotes NuGet'
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Compilar aplicação'
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Executar testes unitários'
+  inputs:
+    command: 'test'
+    projects: '**/FCG.Application.Tests.csproj'
+    arguments: '--configuration $(buildConfiguration) --no-build --collect "Code Coverage"'
+    publishTestResults: true
+    
+# --- Etapas de Docker somente para main ---
+
+- task: Docker@2
+  displayName: 'Construir imagem Docker'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  inputs:
+    containerRegistry: '$(dockerRegistryServiceConnection)'
+    repository: '$(imageRepository)
+    command: 'build'
+    Dockerfile: '$(dockerfilePath)'
+    tags: |
+      $(tag) # Adiciona a tag com o Build ID
+      latest # Opcional: Adiciona também a tag 'latest' (cuidado em produção, pode ser sobrescrita)
+      # Você pode adicionar tags baseadas em branches, por exemplo:
+      # $(Build.SourceBranchName)
+
+- task: Docker@2
+  displayName: 'Publicar imagem Docker'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  inputs:
+    containerRegistry: '$(dockerRegistryServiceConnection)'
+    repository: '$(imageRepository)'
+    command: 'push'
+    tags: |
+      $(tag)
+      latest # Publica a tag 'latest' também
+
+- publish: '$(Build.ArtifactStagingDirectory)'
+  artifact: 'drop'
