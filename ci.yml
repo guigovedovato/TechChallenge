@@ -7,7 +7,7 @@ pr:
 
 variables:
   buildConfiguration: 'Release'
-  imageRepository: 'fcg'
+  imageRepository: 'fcg129'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
@@ -27,11 +27,11 @@ steps:
     projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Compilar aplicação'
+  displayName: 'Compilar aplicação - $(buildConfiguration)'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '--no-restore --configuration $(buildConfiguration)'
     
 - task: DotNetCoreCLI@2
   displayName: 'Executar testes unitários'
@@ -52,10 +52,8 @@ steps:
     command: 'build'
     Dockerfile: '$(dockerfilePath)'
     tags: |
-      $(tag) # Adiciona a tag com o Build ID
-      latest # Opcional: Adiciona também a tag 'latest' (cuidado em produção, pode ser sobrescrita)
-      # Você pode adicionar tags baseadas em branches, por exemplo:
-      # $(Build.SourceBranchName)
+      $(tag)
+      latest 
 
 - task: Docker@2
   displayName: 'Publicar imagem Docker'
@@ -66,7 +64,7 @@ steps:
     command: 'push'
     tags: |
       $(tag)
-      latest # Publica a tag 'latest' também
+      latest
 
 - publish: '$(Build.ArtifactStagingDirectory)'
   artifact: 'drop'
