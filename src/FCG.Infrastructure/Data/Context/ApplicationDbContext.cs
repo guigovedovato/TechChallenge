@@ -6,23 +6,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace FCG.Infrastructure.Data.Context;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(string connectionString) : DbContext
 {
-    private readonly string _connectionString;
-
-    public ApplicationDbContext(string connectionString)
+    public ApplicationDbContext(IConfiguration configuration) : this(configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string not found."))
     {
-        _connectionString = connectionString;
-    }
-
-    public ApplicationDbContext()
-    {
-        IConfiguration configuration = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        _connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string not found.");
     }
 
     public DbSet<LoginModel> Logins { get; set; } = null!;
@@ -33,7 +20,7 @@ public class ApplicationDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlite(_connectionString);
+            optionsBuilder.UseNpgsql(connectionString);
             optionsBuilder.UseLazyLoadingProxies();
         }
     }
