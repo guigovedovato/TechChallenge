@@ -22,7 +22,6 @@ steps:
       inlineScript: |
         az container create -g $(resourceGroup) \
         --name $(appName) \
-        --container-name $(acrContainerName) \
         --image $(acrLoginServer)/$(acrName):$(resources.pipeline.ciPipeline.id) \
         --cpu 1 \
         --memory 1 \
