@@ -20,12 +20,12 @@ steps:
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        az container create -g $(resourceGroup)
-        --name $(appName)
-        --image $(acrLoginServer)/$(acrName):latest 
-        --cpu 1
-        --memory 1
-        --registry-login-server $(acrLoginServer)
-        --registry-username $(acrName)
-        --registry-password $(acrPassword)
+        az container create -g $(resourceGroup) \
+        --name $(appName) \
+        --image $(acrLoginServer)/$(acrName):latest \
+        --cpu 1 \
+        --memory 1 \
+        --registry-login-server $(acrLoginServer) \
+        --registry-username $(acrName) \
+        --registry-password $(acrPassword) \
         --ports 80
