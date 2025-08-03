@@ -28,7 +28,7 @@ steps:
       inlineScript: |
         az container create -g $(resourceGroup)
         --name $(appName)
-        --image $(acrLoginServer)/$(acrName):$(Build.BuildId) 
+        --image $(acrLoginServer)/$(acrName):latest 
         --cpu 1
         --memory 1
         --registry-login-server $(acrLoginServer)
