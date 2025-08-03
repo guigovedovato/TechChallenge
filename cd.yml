@@ -22,7 +22,7 @@ steps:
       inlineScript: |
         az container create -g $(resourceGroup) \
         --name $(appName) \
-        --image $(acrLoginServer)/$(acrName):$(resources.pipeline.ciPipeline.pipelineID) \
+        --image $(acrLoginServer)/$(acrName):$(resources.pipeline.ciPipeline.runID) \
         --cpu 1 \
         --memory 1 \
         --location eastus \
