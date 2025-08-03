@@ -30,11 +30,8 @@ app.UseGlobalExceptionHandling();
 app.UseCorrelationMiddleware();
 app.UseRequestLogging();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseSerilogRequestLogging();
 

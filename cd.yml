@@ -31,4 +31,4 @@ steps:
         --registry-login-server $(acrLoginServer) \
         --registry-username $(acrUsername) \
         --registry-password $(acrPassword) \
-        --ports 80
+        --ports 8080
