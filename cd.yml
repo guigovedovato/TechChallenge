@@ -14,12 +14,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      buildType: 'current'
-      artifactName: 'drop'
-      targetPath: '$(Pipeline.Workspace)/drop'
-
   - task: AzureCLI@2
     inputs:
       azureSubscription: 'Azure for Students(07de936b-e0c8-47b8-b15f-3d778712ecb6)'
