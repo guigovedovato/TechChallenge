@@ -22,12 +22,12 @@ steps:
       inlineScript: |
         az container create -g $(resourceGroup) \
         --name $(appName) \
-        --image $(acrLoginServer)/$(acrName):$(resources.pipeline.ciPipeline.runID) \
+        --image acr129.azurecr.io/fcg129:33 \
         --cpu 1 \
         --memory 1 \
         --location eastus \
         --os-type Linux \
-        --registry-login-server $(acrLoginServer) \
-        --registry-username $(acrName) \
+        --registry-login-server acr129.azurecr.io \
+        --registry-username acr129 \
         --registry-password $(acrPassword) \
         --ports 80
