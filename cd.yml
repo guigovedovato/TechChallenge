@@ -25,6 +25,7 @@ steps:
         --image $(acrLoginServer)/$(acrName):latest \
         --cpu 1 \
         --memory 1 \
+        --location eastus \
         --registry-login-server $(acrLoginServer) \
         --registry-username $(acrName) \
         --registry-password $(acrPassword) \
