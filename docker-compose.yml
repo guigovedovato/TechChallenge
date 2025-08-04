@@ -1,20 +1,20 @@
 services:
   fcg-api:
     build: .
-    container_name: fcg-api
+    container_name: fcg_api
     depends_on:
       - fcg-db
     ports:
       - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=fcg-db;Port=5432;Pooling=true;Database=FCGDb;User Id=fcg129;Password=Fcg@129
+      - ConnectionStrings__DefaultConnection=Host=fcg_db;Port=5432;Pooling=true;Database=fcgdb;User Id=fcg129;Password=Fcg@129
     networks:
       - fcg-network
 
   fcg-db:
     image: postgres:latest
-    container_name: fcg-db
+    container_name: fcg_db
     restart: always
     shm_size: 128mb
     ports:
@@ -22,7 +22,7 @@ services:
     environment:
       - POSTGRES_USER=fcg129
       - POSTGRES_PASSWORD=Fcg@129
-      - POSTGRES_DB=FCGDb
+      - POSTGRES_DB=fcgdb
     volumes:
       - fcg_data:/var/lib/postgresql
     networks:
@@ -30,7 +30,7 @@ services:
 
   fcg-adminer:
     image: adminer:latest
-    container_name: fcg-adminer
+    container_name: fcg_adminer
     restart: always
     ports:
       - "8083:8080"
