@@ -14,21 +14,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: AzureCLI@2
-    inputs:
-      azureSubscription: 'Azure for Students(07de936b-e0c8-47b8-b15f-3d778712ecb6)'
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: |
-        az container create -g $(resourceGroup) \
-        --name $(appName) \
-        --image $(acrLoginServer)/$(acrName):$(resources.pipeline.ciPipeline.runID) \
-        --cpu 1 \
-        --memory 1 \
-        --location eastus \
-        --os-type Linux \
-        --ip-address Public \
-        --registry-login-server $(acrLoginServer) \
-        --registry-username $(acrUsername) \
-        --registry-password $(acrPassword) \
-        --ports 8080
+- task: AzureContainerApps@1
+  inputs:
+    appSourcePath: '.'
+    azureSubscription: 'Azure for Students Starter(e090b450-f938-4fe1-8405-016ce7e6bb16)'
+    acrName: '$(acrName)'
+    acrUsername: '$(acrUsername)'
+    acrPassword: '$(acrPassword)'
+    imageToDeploy: '$(acrLoginServer)/$(acrName):$(resources.pipeline.ciPipeline.runID)'
+    containerAppName: '$(appName)'
+    resourceGroup: '$(resourceGroup)'
+    targetPort: '8080'
