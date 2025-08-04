@@ -20,6 +20,7 @@ steps:
     azureSubscription: 'Azure for Students(07de936b-e0c8-47b8-b15f-3d778712ecb6)'
     acrName: '$(acrName)'
     acrUsername: '$(acrUsername)'
+    location: 'East Us'
     acrPassword: '$(acrPassword)'
     imageToDeploy: '$(acrLoginServer)/$(acrName):$(resources.pipeline.ciPipeline.runID)'
     containerAppName: '$(appName)'
