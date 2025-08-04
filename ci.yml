@@ -6,9 +6,7 @@ pr:
   - main
 
 variables:
-  dockerRegistryServiceConnection: 'acr129'
   buildConfiguration: 'Release'
-  imageRepository: 'fcg129'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
