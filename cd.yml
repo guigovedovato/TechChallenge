@@ -18,10 +18,9 @@ steps:
   inputs:
     appSourcePath: '.'
     azureSubscription: 'Azure for Students($(subscription))'
-    # connectedServiceNameARM: 'Azure for Students($(subscription))'
     acrName: '$(acrName)'
     acrUsername: '$(acrUsername)'
-    location: 'North Europe'
+    location: 'North EU'
     acrPassword: '$(acrPassword)'
     imageToDeploy: '$(acrLoginServer)/$(acrName):$(resources.pipeline.ciPipeline.runID)'
     containerAppName: '$(appName)'
