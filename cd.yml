@@ -17,10 +17,9 @@ steps:
 - task: AzureContainerApps@1
   inputs:
     appSourcePath: '.'
-    # azureSubscription: 'Azure for Students($(subscription))'
     acrName: '$(acrName)'
     acrUsername: '$(acrUsername)'
-    location: 'East Us'
+    location: 'North Europe'
     acrPassword: '$(acrPassword)'
     imageToDeploy: '$(acrLoginServer)/$(acrName):$(resources.pipeline.ciPipeline.runID)'
     containerAppName: '$(appName)'
