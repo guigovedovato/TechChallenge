@@ -10,7 +10,6 @@ RUN dotnet build "FCG.sln" -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
-WORKDIR /api
 
 # Install the agent
 RUN apt-get update && apt-get install -y wget ca-certificates gnupg \
@@ -32,6 +31,8 @@ NEW_RELIC_APPLICATION_LOGGING_ENABLED=true \
 NEW_RELIC_APPLICATION_LOGGING_FOWARDING_ENABLED=true \
 NEW_RELIC_APPLICATION_LOGGING_FOWARDING_MAX_SAMPLES_STORED=1000 \
 NEW_RELIC_APPLICATION_LOGGING_LOCAL_DECORATING_ENABLED=true
+
+WORKDIR /api
 
 # copy the build output from the previous stage
 COPY --from=build /src/out .
