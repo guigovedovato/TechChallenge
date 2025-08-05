@@ -38,6 +38,6 @@ steps:
     --pid=host \
     -v "/:/host:ro" \
     -v "/var/run/docker.sock:/var/run/docker.sock" \
-    -e NEW_RELIC_LICENSE_KEY='$(nrKey)' \
+    -e NRIA_LICENSE_KEY='$(nrKey)' \
     newrelic/infrastructure:latest
   displayName: 'Construir e Rodar o Contêiner Docker com New Relic'
