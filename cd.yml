@@ -27,22 +27,3 @@ steps:
     resourceGroup: '$(resourceGroup)'
     targetPort: '8080'
   displayName: 'Construir e Rodar o Contêiner Docker com a Aplicação .NET'
-
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: 'Azure for Students(dc74665e-68a9-408a-b49e-ec8cbb7854bd)'
-    scriptType: 'batch'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      docker run \
-          -d \
-          --name newrelic-infra \
-          --network=host \
-          --cap-add=SYS_PTRACE \
-          --privileged \
-          --pid=host \
-          -v "/:/host:ro" \
-          -v "/var/run/docker.sock:/var/run/docker.sock" \
-          -e NRIA_LICENSE_KEY='$(nrKey)' \
-          newrelic/infrastructure:latest
-  displayName: 'Construir e Rodar o Contêiner Docker com New Relic'
