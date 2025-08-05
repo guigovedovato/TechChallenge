@@ -17,7 +17,7 @@ steps:
 - task: AzureContainerApps@1
   inputs:
     appSourcePath: '.'
-    azureSubscription: 'Azure for Students($(subscription))'
+    # azureSubscription: 'Azure for Students($(subscription))'
     acrName: '$(acrName)'
     acrUsername: '$(acrUsername)'
     location: 'East Us'
