@@ -26,3 +26,18 @@ steps:
     containerAppName: '$(appName)'
     resourceGroup: '$(resourceGroup)'
     targetPort: '8080'
+  displayName: 'Construir e Rodar o Contêiner Docker com a Aplicação .NET'
+
+- script: |
+    docker run \
+    -d \
+    --name newrelic-infra \
+    --network=host \
+    --cap-add=SYS_PTRACE \
+    --privileged \
+    --pid=host \
+    -v "/:/host:ro" \
+    -v "/var/run/docker.sock:/var/run/docker.sock" \
+    -e NEW_RELIC_LICENSE_KEY=NRAK-9OO9X582GDGRZ5QPLWOAQMUPYJ7 \
+    newrelic/infrastructure:latest
+  displayName: 'Construir e Rodar o Contêiner Docker com New Relic'

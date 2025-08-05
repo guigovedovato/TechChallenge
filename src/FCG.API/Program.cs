@@ -7,10 +7,16 @@ using FCG.API.Configuration.Swagger;
 using FCG.API.Endpoints;
 using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDocumentation();
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateLogger();
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
@@ -24,7 +30,7 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Admin", policy => policy.RequireRole("Admin"))
     .AddPolicy("User", policy => policy.RequireRole("User"));
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 app.UseGlobalExceptionHandling();
 app.UseCorrelationMiddleware();
